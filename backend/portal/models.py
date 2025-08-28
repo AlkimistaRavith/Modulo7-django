@@ -1,5 +1,7 @@
 from django.db import models
-
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
+import uuid
 
 # Create your models here.
 
@@ -16,14 +18,15 @@ class Comuna(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name="comunas")
 
     def __str__(self):
-        return f"{self.nombre}, de la región {self.region}"
+        return f"{self.nombre}, de la {self.region}"
 
 class Inmueble(models.Model):
     class Tipo_Inmueble(models.TextChoices):
-        casa = "CASA", _("Casa")
-        departamento = "DPTO", _("Departamento")
-        parcela = "PARC", _("Parcela")
+        CASA = "CASA", _("Casa")
+        DEPARTAMENTO = "DPTO", _("Departamento")
+        PARCELA = "PARC", _("Parcela")
     
+    propietario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="inmuebles")
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     m2_construido = models.FloatField(default=0)
@@ -37,3 +40,39 @@ class Inmueble(models.Model):
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
     tipo_inmueble = models.CharField(max_length=20, choices=Tipo_Inmueble.choices)
+
+    def __str__(self):
+            return f"{self.nombre} ( {self.arriendo_mensual} )"
+    
+class SolicitudArriendo(models.Model):
+    class EstadoSolicitud(models.TextChoices):
+        PENDIENTE = "P", _("Pendiente")
+        ACEPTADO = "A", _("Aceptada")
+        RECHAZADO = "R", _("Rechazada")
+    
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    inmueble = models.ForeignKey(Inmueble, on_delete=models.CASCADE, related_name="solicitudes")
+    arrendatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="solicitudes_enviadas")
+    estado = models.CharField(max_length=10, choices=EstadoSolicitud.choices, default=EstadoSolicitud.PENDIENTE)
+    creado = models.DateTimeField(auto_now_add=True)
+    actualizado = models.DateTimeField(auto_now=True)    
+    
+    def __str__(self):
+        return f"{self.uuid} - {self.inmueble} - {self.estado}"
+
+class PerfilUser(models.Model):
+    class TipoUsuario(models.TextChoices):
+        ARRENDATARIO = "arrendatario", _("Arrendatario")
+        ARRENDADOR = "arrendador", _("Arrendador")
+    
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    tipo_usuario = models.CharField(max_length=13, choices=TipoUsuario.choices, default=TipoUsuario.ARRENDATARIO)
+    rut = models.CharField(max_length=50, unique=True, blank=True, null=True)
+
+    USER_FIELDS = [ "user", "tipo_usuario", "rut" ]
+    
+
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} | {self.tipo_usuario}"
+    
