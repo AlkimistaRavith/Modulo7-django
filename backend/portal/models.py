@@ -1,7 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 import uuid
+from django.conf import settings
 
 # Create your models here.
 
@@ -26,7 +27,7 @@ class Inmueble(models.Model):
         DEPARTAMENTO = "DPTO", _("Departamento")
         PARCELA = "PARC", _("Parcela")
     
-    propietario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="inmuebles")
+    propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles")
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     m2_construido = models.FloatField(default=0)
@@ -52,7 +53,7 @@ class SolicitudArriendo(models.Model):
     
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     inmueble = models.ForeignKey(Inmueble, on_delete=models.CASCADE, related_name="solicitudes")
-    arrendatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="solicitudes_enviadas")
+    arrendatario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="solicitudes_enviadas")
     estado = models.CharField(max_length=10, choices=EstadoSolicitud.choices, default=EstadoSolicitud.PENDIENTE)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)    
@@ -60,19 +61,17 @@ class SolicitudArriendo(models.Model):
     def __str__(self):
         return f"{self.uuid} - {self.inmueble} - {self.estado}"
 
-class PerfilUser(models.Model):
+class PerfilUser(AbstractUser):
     class TipoUsuario(models.TextChoices):
         ARRENDATARIO = "arrendatario", _("Arrendatario")
         ARRENDADOR = "arrendador", _("Arrendador")
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    
     tipo_usuario = models.CharField(max_length=13, choices=TipoUsuario.choices, default=TipoUsuario.ARRENDATARIO)
     rut = models.CharField(max_length=50, unique=True, blank=True, null=True)
 
-    USER_FIELDS = [ "user", "tipo_usuario", "rut" ]
-    
 
 
     def __str__(self):
-        return f"{self.user.get_full_name()} | {self.tipo_usuario}"
+        return f"{self.get_full_name()} | {self.tipo_usuario}"
     
