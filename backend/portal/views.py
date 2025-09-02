@@ -10,7 +10,8 @@ from django.views.decorators.csrf import csrf_protect
 
 from .models import (
     Region,
-    Comuna
+    Comuna,
+    Inmueble
 )
 from django.views.generic import (
     ListView,
@@ -20,7 +21,8 @@ from django.views.generic import (
 )
 from .form import (
     RegionForm,
-    ComunaForm
+    ComunaForm,
+    InmuebleForm
 )
 
 
@@ -77,7 +79,30 @@ class ComunaDeleteView(DeleteView):
     template_name = "inmueble/comuna_confirm_delete.html"
     success_url = reverse_lazy("comuna_list")
 
+#########################################################################
+# CRUD PARA INMUEBLE
+#########################################################################
+class InmuebleListView(ListView):
+    model = Inmueble
+    template_name = "inmueble/inmueble_list.html"
+    context_object_name = "inmuebles"
+    
+class InmuebleCreateView(CreateView):
+    model = Inmueble
+    form_class = InmuebleForm
+    template_name = "inmueble/inmueble_form.html"
+    success_url = reverse_lazy("inmueble_list")
 
+class InmuebleUpdateView(UpdateView):
+    model = Inmueble
+    form_class = InmuebleForm
+    template_name = "inmueble/inmueble_form.html"
+    success_url = reverse_lazy("inmueble_list")
+
+class InmuebleDeleteView(DeleteView):
+    model = Inmueble
+    template_name = "inmueble/inmueble_confirm_delete.html"
+    success_url = reverse_lazy("inmueble_list")
 
 
 

@@ -14,6 +14,11 @@ urlpatterns = [
     path("actualizar_comuna/<int:pk>", ComunaUpdateView.as_view() , name="comuna_update"),
     path("borrar_comuna/<int:pk>", ComunaDeleteView.as_view() , name="comuna_delete"),
 ##############################################################################################
+    path("lista_inmuebles/", InmuebleListView.as_view() , name="inmueble_list"),
+    path("crear_inmueble/", InmuebleCreateView.as_view() , name="inmueble_create"),
+    path("actualizar_inmueble/<int:pk>", InmuebleUpdateView.as_view() , name="inmueble_update"),
+    path("borrar_inmueble/<int:pk>", InmuebleDeleteView.as_view() , name="inmueble_delete"),
+##############################################################################################
 
 # clase 01/09/25
     #path("", home , name="home"),

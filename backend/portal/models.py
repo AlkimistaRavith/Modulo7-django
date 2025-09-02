@@ -37,7 +37,7 @@ class Inmueble(models.Model):
     m2_total = models.FloatField(default=0)
     estacionamientos = models.PositiveSmallIntegerField(default=0)
     habitaciones = models.PositiveSmallIntegerField(default=0)
-    baños = models.PositiveSmallIntegerField(default=0)
+    banos = models.PositiveSmallIntegerField(default=0)
     direccion = models.CharField(max_length=100)
     comuna = models.ForeignKey(Comuna, on_delete=models.PROTECT, related_name="inmuebles")
     arriendo_mensual = models.DecimalField(max_digits=8, decimal_places=2)

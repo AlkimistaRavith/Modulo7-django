@@ -14,7 +14,26 @@ class ComunaForm(forms.ModelForm):
     class Meta:
         model = Comuna
         fields = ["region", "nombre"]
-    
+
+
+class InmuebleForm(forms.ModelForm):
+    class Meta:
+        model = Inmueble
+        fields = [
+            "nombre",
+            "descripcion",
+            "imagen",
+            "m2_construido",
+            "m2_total",
+            "estacionamientos",
+            "habitaciones",
+            "banos",
+            "direccion",
+            "comuna",
+            "arriendo_mensual",
+            "tipo_inmueble",
+        ]
+
 # clase 01/09/2025
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
