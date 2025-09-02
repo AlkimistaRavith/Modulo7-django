@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractUser
 import uuid
 from django.conf import settings
 
 # Create your models here.
 
-
+#MODELO DE REGION
 class Region(models.Model):
     nro_region = models.CharField(max_length=5)
     nombre = models.CharField(max_length=100, unique=True)
@@ -14,6 +14,7 @@ class Region(models.Model):
     def __str__(self):
         return f"{self.nombre} ({self.nro_region} región)"
 
+#MODELO DE COMUNA
 class Comuna(models.Model):
     nombre = models.CharField(max_length=50)
     region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name="comunas")
@@ -21,6 +22,7 @@ class Comuna(models.Model):
     def __str__(self):
         return f"{self.nombre}, de la {self.region}"
 
+#MODELO DE INMUEBLE
 class Inmueble(models.Model):
     class Tipo_Inmueble(models.TextChoices):
         CASA = "CASA", _("Casa")
@@ -30,6 +32,7 @@ class Inmueble(models.Model):
     propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles")
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
+    imagen = models.ImageField(default="sin_imagen")
     m2_construido = models.FloatField(default=0)
     m2_total = models.FloatField(default=0)
     estacionamientos = models.PositiveSmallIntegerField(default=0)
@@ -44,7 +47,8 @@ class Inmueble(models.Model):
 
     def __str__(self):
             return f"{self.nombre} ( {self.arriendo_mensual} )"
-    
+
+#MODELO DE SOLICITUD ARRIENDO
 class SolicitudArriendo(models.Model):
     class EstadoSolicitud(models.TextChoices):
         PENDIENTE = "P", _("Pendiente")
@@ -61,17 +65,16 @@ class SolicitudArriendo(models.Model):
     def __str__(self):
         return f"{self.uuid} - {self.inmueble} - {self.estado}"
 
+
+#MODELO TIPO USUARIO
 class PerfilUser(AbstractUser):
     class TipoUsuario(models.TextChoices):
         ARRENDATARIO = "arrendatario", _("Arrendatario")
         ARRENDADOR = "arrendador", _("Arrendador")
-    
-    
+        
     tipo_usuario = models.CharField(max_length=13, choices=TipoUsuario.choices, default=TipoUsuario.ARRENDATARIO)
     rut = models.CharField(max_length=50, unique=True, blank=True, null=True)
 
-
-
     def __str__(self):
         return f"{self.get_full_name()} | {self.tipo_usuario}"
-    
+

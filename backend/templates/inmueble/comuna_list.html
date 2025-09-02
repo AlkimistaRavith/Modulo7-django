@@ -6,17 +6,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Lista de Regiones</h1>
+    <h1>COMUNAS</h1>
 
-    {% for region in regiones %}
-        {{region.id}}
+    {% for comuna in comunas %}
+        {{comuna.id}}
+        {{comuna.nombre}}
         <br>
-        {{region.nro_region}}
-        {{region.nombre}}
+        {{comuna.region}}
         <br><br>
     {% endfor %}
     <br>
-    <a href="{% url 'region_create' %}">Crear Región</a>
+    <a href="{% url 'comuna_create' %}">Crear Comuna</a>
 
 </body>
 </html>
