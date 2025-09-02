@@ -6,14 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Formulario para Inmueble</h1>
-
+    
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Subir inmueble</button>
-
+        <p>¿Estás seguro de querer borrar tu solicitud: {{object}}?</p>
+        <input type="submit" value="Confirm">
+        
     </form>
 
 </body>
 </html>
+

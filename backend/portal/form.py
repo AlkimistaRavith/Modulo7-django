@@ -34,6 +34,20 @@ class InmuebleForm(forms.ModelForm):
             "tipo_inmueble",
         ]
 
+class SolicitudArriendoForm(forms.ModelForm):
+    class Meta:
+        model = SolicitudArriendo
+        fields = [
+            "inmueble",
+            "arrendatario",
+            "mensaje",
+        ]
+
+class PerfilUserForm(forms.ModelForm):
+    class Meta:
+        model = PerfilUser
+        fields = ["tipo_usuario", "rut"]
+
 # clase 01/09/2025
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)

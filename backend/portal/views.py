@@ -11,7 +11,9 @@ from django.views.decorators.csrf import csrf_protect
 from .models import (
     Region,
     Comuna,
-    Inmueble
+    Inmueble,
+    SolicitudArriendo,
+    PerfilUser
 )
 from django.views.generic import (
     ListView,
@@ -22,7 +24,9 @@ from django.views.generic import (
 from .form import (
     RegionForm,
     ComunaForm,
-    InmuebleForm
+    InmuebleForm,
+    SolicitudArriendoForm,
+    PerfilUserForm
 )
 
 
@@ -104,6 +108,39 @@ class InmuebleDeleteView(DeleteView):
     template_name = "inmueble/inmueble_confirm_delete.html"
     success_url = reverse_lazy("inmueble_list")
 
+#########################################################################
+# CRUD PARA SOLICITUDES DE ARRIENDO
+#########################################################################
+class SolicitudArriendoListView(ListView):
+    model = SolicitudArriendo
+    template_name = "inmueble/solicitud_list.html"
+    context_object_name = "solicitudes"
+    
+class SolicitudArriendoCreateView(CreateView):
+    model = SolicitudArriendo
+    form_class = SolicitudArriendoForm
+    template_name = "inmueble/solicitud_form.html"
+    success_url = reverse_lazy("solicitud_list")
+
+class SolicitudArriendoUpdateView(UpdateView):
+    model = SolicitudArriendo
+    form_class = SolicitudArriendoForm
+    template_name = "inmueble/solicitud_form.html"
+    success_url = reverse_lazy("solicitud_list")
+
+class SolicitudArriendoDeleteView(DeleteView):
+    model = SolicitudArriendo
+    template_name = "inmueble/solicitud_confirm_delete.html"
+    success_url = reverse_lazy("solicitud_list")
+
+#########################################################################
+# CRUD PARA SOLICITUDES DE ARRIENDO
+#########################################################################
+class PerfilUserUpdateView(UpdateView):
+    model = PerfilUser
+    form_class = PerfilUserForm
+    template_name = "usuario/perfil_form.html"
+    success_url = reverse_lazy("solicitud_list")
 
 
 

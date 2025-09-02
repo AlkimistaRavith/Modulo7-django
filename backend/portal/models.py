@@ -25,11 +25,11 @@ class Comuna(models.Model):
 #MODELO DE INMUEBLE
 class Inmueble(models.Model):
     class Tipo_Inmueble(models.TextChoices):
-        CASA = "CASA", _("Casa")
-        DEPARTAMENTO = "DPTO", _("Departamento")
-        PARCELA = "PARC", _("Parcela")
+        CASA = "Casa", _("Casa")
+        DEPARTAMENTO = "Departamento", _("Departamento")
+        PARCELA = "Parcela", _("Parcela")
     
-    propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles")
+    propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles", null=True, blank=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     imagen = models.ImageField(default="sin_imagen")
@@ -40,7 +40,7 @@ class Inmueble(models.Model):
     banos = models.PositiveSmallIntegerField(default=0)
     direccion = models.CharField(max_length=100)
     comuna = models.ForeignKey(Comuna, on_delete=models.PROTECT, related_name="inmuebles")
-    arriendo_mensual = models.DecimalField(max_digits=8, decimal_places=2)
+    arriendo_mensual = models.DecimalField(max_digits=10, decimal_places=2)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)
     tipo_inmueble = models.CharField(max_length=20, choices=Tipo_Inmueble.choices)
@@ -51,13 +51,14 @@ class Inmueble(models.Model):
 #MODELO DE SOLICITUD ARRIENDO
 class SolicitudArriendo(models.Model):
     class EstadoSolicitud(models.TextChoices):
-        PENDIENTE = "P", _("Pendiente")
-        ACEPTADO = "A", _("Aceptada")
-        RECHAZADO = "R", _("Rechazada")
+        PENDIENTE = "Pendiente", _("Pendiente")
+        ACEPTADO = "Aceptado", _("Aceptada")
+        RECHAZADO = "Rechazado", _("Rechazada")
     
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     inmueble = models.ForeignKey(Inmueble, on_delete=models.CASCADE, related_name="solicitudes")
-    arrendatario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="solicitudes_enviadas")
+    arrendatario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="solicitudes_enviadas", null=True, blank=True)
+    mensaje = models.TextField(null=True, blank=True)
     estado = models.CharField(max_length=10, choices=EstadoSolicitud.choices, default=EstadoSolicitud.PENDIENTE)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)    
@@ -66,7 +67,7 @@ class SolicitudArriendo(models.Model):
         return f"{self.uuid} - {self.inmueble} - {self.estado}"
 
 
-#MODELO TIPO USUARIO
+#MODELO PERFIL USUARIO
 class PerfilUser(AbstractUser):
     class TipoUsuario(models.TextChoices):
         ARRENDATARIO = "arrendatario", _("Arrendatario")
