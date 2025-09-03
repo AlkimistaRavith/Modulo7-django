@@ -32,7 +32,7 @@ class Inmueble(models.Model):
     propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles", null=True, blank=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
-    imagen = models.ImageField(default="sin_imagen")
+    imagen = models.ImageField(upload_to='inmuebles/', default="sin_imagen")
     m2_construido = models.FloatField(default=0)
     m2_total = models.FloatField(default=0)
     estacionamientos = models.PositiveSmallIntegerField(default=0)
@@ -75,6 +75,7 @@ class PerfilUser(AbstractUser):
         
     tipo_usuario = models.CharField(max_length=13, choices=TipoUsuario.choices, default=TipoUsuario.ARRENDATARIO)
     rut = models.CharField(max_length=50, unique=True, blank=True, null=True)
+    imagen = models.ImageField(upload_to='fotos_perfil/', default="sin_imagen")
 
     def __str__(self):
         return f"{self.get_full_name()} | {self.tipo_usuario}"

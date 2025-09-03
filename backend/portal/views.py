@@ -33,9 +33,11 @@ from .form import (
 
 # Create your views here.
 
-#########################################################################
-# CRUD PARA REGION
-#########################################################################
+#######################################################################################
+#TEMPLATE: INMUEBLE
+#######################################################################################
+
+###CRUD PARA REGION
 class RegionListView(ListView):
     model = Region
     template_name = "inmueble/region_list.html"
@@ -58,9 +60,7 @@ class RegionDeleteView(DeleteView):
     template_name = "inmueble/region_confirm_delete.html"
     success_url = reverse_lazy("region_list")
 
-#########################################################################
-# CRUD PARA COMUNA
-#########################################################################
+###CRUD PARA COMUNA
 class ComunaListView(ListView):
     model = Comuna
     template_name = "inmueble/comuna_list.html"
@@ -83,9 +83,7 @@ class ComunaDeleteView(DeleteView):
     template_name = "inmueble/comuna_confirm_delete.html"
     success_url = reverse_lazy("comuna_list")
 
-#########################################################################
-# CRUD PARA INMUEBLE
-#########################################################################
+###CRUD PARA INMUEBLE
 class InmuebleListView(ListView):
     model = Inmueble
     template_name = "inmueble/inmueble_list.html"
@@ -108,9 +106,7 @@ class InmuebleDeleteView(DeleteView):
     template_name = "inmueble/inmueble_confirm_delete.html"
     success_url = reverse_lazy("inmueble_list")
 
-#########################################################################
-# CRUD PARA SOLICITUDES DE ARRIENDO
-#########################################################################
+###CRUD PARA SOLICITUDES DE ARRIENDO
 class SolicitudArriendoListView(ListView):
     model = SolicitudArriendo
     template_name = "inmueble/solicitud_list.html"
@@ -133,18 +129,18 @@ class SolicitudArriendoDeleteView(DeleteView):
     template_name = "inmueble/solicitud_confirm_delete.html"
     success_url = reverse_lazy("solicitud_list")
 
-#########################################################################
-# CRUD PARA SOLICITUDES DE ARRIENDO
-#########################################################################
+###CRUD PARA SOLICITUDES DE ARRIENDO
 class PerfilUserUpdateView(UpdateView):
     model = PerfilUser
     form_class = PerfilUserForm
     template_name = "usuario/perfil_form.html"
     success_url = reverse_lazy("solicitud_list")
 
+#######################################################################################
+# TEMPLATES: REGISTER
+#######################################################################################
 
-
-# clase 01/09/25
+###Register
 def register_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
@@ -156,6 +152,7 @@ def register_view(request):
     else:
         form = RegisterForm()
     return render(request, "registration/register.html", {"form": form})
+###LOGIN
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("home")
@@ -166,8 +163,15 @@ def login_view(request):
         messages.success(request, "Has iniciado sesión.")
         return redirect("home")
     return render(request, "registration/login.html", {"form": form})
+###LOGOUT
 @login_required
 def logout_view(request):
     logout(request)
     messages.info(request, "Has cerrado sesión.")
     return redirect("login")
+
+#######################################################################################
+#TEMPLATES: WEB
+#######################################################################################
+def home(request):
+    return render(request, "web/home.html")

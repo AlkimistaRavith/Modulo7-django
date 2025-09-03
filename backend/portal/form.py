@@ -1,21 +1,20 @@
 from django import forms
 from .models import *
-
-# clase 01/09/25
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-
+### FORMULARIO DE REGION
 class RegionForm(forms.ModelForm):
     class Meta:
         model = Region
         fields = ["nro_region", "nombre"]
 
+### FORMULARIO DE COMUNA
 class ComunaForm(forms.ModelForm):
     class Meta:
         model = Comuna
         fields = ["region", "nombre"]
 
-
+### FORMULARIO DE INMUEBLE
 class InmuebleForm(forms.ModelForm):
     class Meta:
         model = Inmueble
@@ -34,6 +33,7 @@ class InmuebleForm(forms.ModelForm):
             "tipo_inmueble",
         ]
 
+### FORMULARIO DE SOLICITUDES DE ARRIENDO
 class SolicitudArriendoForm(forms.ModelForm):
     class Meta:
         model = SolicitudArriendo
@@ -43,12 +43,13 @@ class SolicitudArriendoForm(forms.ModelForm):
             "mensaje",
         ]
 
+### FORMULARIO DE TIPO DE USUARIO (PERFIL ARRENDADOR O ARRENDATARIO)
 class PerfilUserForm(forms.ModelForm):
     class Meta:
         model = PerfilUser
-        fields = ["tipo_usuario", "rut"]
+        fields = ["tipo_usuario", "rut", "imagen"]
 
-# clase 01/09/2025
+### FORMULARIO DE REGISTRO
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
     class Meta:
@@ -59,10 +60,13 @@ class RegisterForm(UserCreationForm):
             "last_name",
             "email",
             "rut",
+            "imagen",
             "tipo_usuario",
             "password1",
             "password2",
         ]
+
+### FORMULARIO DE LOGIN (DE AUTHENTICATION FORM DJANGO)
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label="Usuario")
     password = forms.CharField(label="Contraseña", widget=forms.PasswordInput)

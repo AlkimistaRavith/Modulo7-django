@@ -6,14 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Formulario para Inmueble</h1>
-
+    <h1>Registro</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Subir inmueble</button>
-
+        <button type="submit">Crear cuenta</button>
     </form>
 
+    <p><a href="{% url 'login' %}">Ya tengo cuenta</a></p>
 </body>
 </html>

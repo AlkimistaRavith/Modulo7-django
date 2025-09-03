@@ -27,9 +27,11 @@ urlpatterns = [
 ### PERFIL USER ###############################################################################
     path("actualizar_perfil/<int:pk>", PerfilUserUpdateView.as_view() , name="perfil_update"),
 
-# clase 01/09/25
-    #path("", home , name="home"),
+### LOGIN-LOGOUT ###############################################################################
     path("accounts/login/",  login_view,  name="login"),
     path("accounts/logout/", logout_view, name="logout"),
     path("accounts/register/", register_view, name="register"),
+
+
+    path("", home , name="home"),
 ]
