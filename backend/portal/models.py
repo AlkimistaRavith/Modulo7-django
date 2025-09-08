@@ -32,7 +32,7 @@ class Inmueble(models.Model):
     propietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inmuebles", null=True, blank=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
-    imagen = models.ImageField(upload_to='inmuebles/', default="sin_imagen")
+    imagen = models.ImageField(upload_to='inmuebles/', default='inmuebles/sin_imagen.jpg')
     m2_construido = models.FloatField(default=0)
     m2_total = models.FloatField(default=0)
     estacionamientos = models.PositiveSmallIntegerField(default=0)
@@ -46,7 +46,7 @@ class Inmueble(models.Model):
     tipo_inmueble = models.CharField(max_length=20, choices=Tipo_Inmueble.choices)
 
     def __str__(self):
-            return f"{self.nombre} ( {self.arriendo_mensual} )"
+        return f"{self.nombre} - ${self.arriendo_mensual:,.0f}"
 
 #MODELO DE SOLICITUD ARRIENDO
 class SolicitudArriendo(models.Model):
