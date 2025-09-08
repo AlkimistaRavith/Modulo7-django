@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    {% include 'web/componentes/scripts.html' %}
+</head>
+<body>
+    <!-- Popular Properties -->
+    <section class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-primary">Popular Properties</h2>
+            <a href="{% url 'properties_list' %}" class="btn rounded-pill" style="background-color:#006d6f; color:white;">
+                View all properties
+            </a>
+        </div>
+
+        <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="row g-4">
+                        {% for property in properties|slice:":3" %}
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{{ property.image.url }}" class="card-img-top" alt="Property Image">
+                                <div class="card-body">
+                                    <h5 class="fw-bold text-teal">${{ property.price|floatformat:0 }}</h5>
+                                    <p class="mb-1">{{ property.address }}</p>
+                                    <p class="fw-semibold">{{ property.city }}, {{ property.country }}</p>
+                                    <p>
+                                        <i class="bi bi-house-door"></i> {{ property.beds }} beds
+                                        <i class="bi bi-droplet ms-3"></i> {{ property.baths }} baths
+                                    </p>
+                                    <a href="{% url 'property_detail' property.id %}" 
+                                    class="btn rounded-pill" 
+                                    style="background-color:#006d6f; color:white;">
+                                    See details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        {% for property in properties|slice:"3:6" %}
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <img src="{{ property.image.url }}" class="card-img-top" alt="Property Image">
+                                <div class="card-body">
+                                    <h5 class="fw-bold text-teal">${{ property.price|floatformat:0 }}</h5>
+                                    <p class="mb-1">{{ property.address }}</p>
+                                    <p class="fw-semibold">{{ property.city }}, {{ property.country }}</p>
+                                    <p>
+                                        <i class="bi bi-house-door"></i> {{ property.beds }} beds
+                                        <i class="bi bi-droplet ms-3"></i> {{ property.baths }} baths
+                                    </p>
+                                    <a href="{% url 'property_detail' property.id %}" 
+                                    class="btn rounded-pill" 
+                                    style="background-color:#006d6f; color:white;">
+                                    See details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </section>
+</body>
+</html>

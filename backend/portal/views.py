@@ -175,3 +175,8 @@ def logout_view(request):
 #######################################################################################
 def home(request):
     return render(request, "web/home.html")
+
+
+def header(request):
+    inmuebles = Inmueble.objects.all()[:5]  # Traemos 5 inmuebles para el carrusel
+    return render(request, 'header.html', {'inmuebles': inmuebles})
