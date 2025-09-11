@@ -1,5 +1,5 @@
 
-from django.urls import path
+from django.urls import path, include
 from .views import *
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path("crear_inmueble/", InmuebleCreateView.as_view() , name="inmueble_create"),
     path("actualizar_inmueble/<int:pk>", InmuebleUpdateView.as_view() , name="inmueble_update"),
     path("borrar_inmueble/<int:pk>", InmuebleDeleteView.as_view() , name="inmueble_delete"),
+    path("lista_inmuebles/<int:pk>/", InmuebleDetailView.as_view(), name="inmueble_detail"),
 ### SOLICITUDES ###############################################################################
     path("lista_solicitudes/", SolicitudArriendoListView.as_view() , name="solicitud_list"),
     path("crear_solicitud/", SolicitudArriendoCreateView.as_view() , name="solicitud_create"),
@@ -29,6 +30,7 @@ urlpatterns = [
 
 ### LOGIN-LOGOUT ###############################################################################
     path("accounts/login/",  login_view,  name="login"),
+    
     path("accounts/logout/", logout_view, name="logout"),
     path("accounts/register/", register_view, name="register"),
 

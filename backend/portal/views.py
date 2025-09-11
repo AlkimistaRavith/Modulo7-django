@@ -19,7 +19,8 @@ from django.views.generic import (
     ListView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
+    DetailView,
 )
 from .form import (
     RegionForm,
@@ -89,6 +90,22 @@ class InmuebleListView(ListView):
     template_name = "inmueble/inmueble_list.html"
     context_object_name = "inmuebles"
     
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        ubicacion = self.request.GET.get('ubicacion')
+        precio_min = self.request.GET.get('precio_min')
+        precio_max = self.request.GET.get('precio_max')
+
+        if ubicacion:
+            queryset = queryset.filter(comuna__nombre__icontains=ubicacion)
+        if precio_min:
+            queryset = queryset.filter(arriendo_mensual__gte=precio_min)
+        if precio_max:
+            queryset = queryset.filter(arriendo_mensual__lte=precio_max)
+
+        return queryset
+
 class InmuebleCreateView(CreateView):
     model = Inmueble
     form_class = InmuebleForm
@@ -106,6 +123,11 @@ class InmuebleDeleteView(DeleteView):
     template_name = "inmueble/inmueble_confirm_delete.html"
     success_url = reverse_lazy("inmueble_list")
 
+class InmuebleDetailView(DetailView):
+    model = Inmueble
+    template_name = "inmueble/inmueble_detail.html"
+    context_object_name = "inmueble"
+
 ###CRUD PARA SOLICITUDES DE ARRIENDO
 class SolicitudArriendoListView(ListView):
     model = SolicitudArriendo
@@ -117,6 +139,23 @@ class SolicitudArriendoCreateView(CreateView):
     form_class = SolicitudArriendoForm
     template_name = "inmueble/solicitud_form.html"
     success_url = reverse_lazy("solicitud_list")
+    
+    def get_initial(self):
+        """Prellenar el campo inmueble si viene en querystring"""
+        initial = super().get_initial()
+        inmueble_id = self.request.GET.get("inmueble_id")
+        if inmueble_id:
+            initial["inmueble"] = inmueble_id
+            return initial
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.arrendatario = self.request.user
+            return super().form_valid(form)
+        else:
+            # si no está logeado, no debería poder llegar acá
+            form.add_error(None, "Debes iniciar sesión para enviar la solicitud.")
+            return self.form_invalid(form)
 
 class SolicitudArriendoUpdateView(UpdateView):
     model = SolicitudArriendo
@@ -174,9 +213,6 @@ def logout_view(request):
 #TEMPLATES: WEB
 #######################################################################################
 def home(request):
-    return render(request, "web/home.html")
+    inmuebles = Inmueble.objects.all()[:5]
+    return render(request, "web/home.html", {"inmuebles": inmuebles})
 
-
-def header(request):
-    inmuebles = Inmueble.objects.all()[:5]  # Traemos 5 inmuebles para el carrusel
-    return render(request, 'header.html', {'inmuebles': inmuebles})

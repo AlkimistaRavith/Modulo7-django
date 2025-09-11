@@ -39,7 +39,6 @@ class SolicitudArriendoForm(forms.ModelForm):
         model = SolicitudArriendo
         fields = [
             "inmueble",
-            "arrendatario",
             "mensaje",
         ]
 
