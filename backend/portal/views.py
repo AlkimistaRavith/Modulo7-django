@@ -93,18 +93,38 @@ class InmuebleListView(ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
 
-        ubicacion = self.request.GET.get('ubicacion')
-        precio_min = self.request.GET.get('precio_min')
-        precio_max = self.request.GET.get('precio_max')
+        region_id = self.request.GET.get("region")
+        comuna_id = self.request.GET.get("comuna")
+        tipo = self.request.GET.get("tipo")
+        precio_min = self.request.GET.get("precio_min")
+        precio_max = self.request.GET.get("precio_max")
 
-        if ubicacion:
-            queryset = queryset.filter(comuna__nombre__icontains=ubicacion)
+        if region_id:
+            queryset = queryset.filter(comuna__region_id=region_id)
+        if comuna_id:
+            queryset = queryset.filter(comuna_id=comuna_id)
+        if tipo:
+            queryset = queryset.filter(tipo_inmueble=tipo)
         if precio_min:
             queryset = queryset.filter(arriendo_mensual__gte=precio_min)
         if precio_max:
             queryset = queryset.filter(arriendo_mensual__lte=precio_max)
 
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        region_id = self.request.GET.get("region")
+
+        context["regiones"] = Region.objects.all()
+        context["tipos_inmueble"] = Inmueble.Tipo_Inmueble.choices
+
+        if region_id:
+            context["comunas"] = Comuna.objects.filter(region_id=region_id)
+        else:
+            context["comunas"] = Comuna.objects.none()
+
+        return context
 
 class InmuebleCreateView(CreateView):
     model = Inmueble

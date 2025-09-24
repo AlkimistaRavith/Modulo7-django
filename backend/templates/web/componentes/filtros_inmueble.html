@@ -1,20 +1,34 @@
 <div class="card shadow-sm p-3">
     <h5 class="mb-3">Filtros</h5>
     <form method="get">
-        <!-- Buscar -->
-        <div class="mb-3">
-            <label class="form-label">Buscar</label>
-            <input type="text" name="q" class="form-control" placeholder="Nombre o descripción">
-        </div>
 
         <!-- Región -->
         <div class="mb-3">
             <label class="form-label">Región</label>
-            <select name="region" class="form-select">
+            <select name="region" class="form-select" id="regionSelect">
                 <option value="">Todas</option>
                 {% for region in regiones %}
-                    <option value="{{ region.id }}">{{ region.nombre }}</option>
+                    <option value="{{ region.id }}"
+                        {% if request.GET.region == region.id|stringformat:"s" %}selected{% endif %}>
+                        {{ region.nombre }}
+                    </option>
                 {% endfor %}
+            </select>
+        </div>
+
+        <!-- Comuna (dependiente de Región) -->
+        <div class="mb-3">
+            <label class="form-label">Comuna</label>
+            <select name="comuna" class="form-select" id="comunaSelect">
+                <option value="">Todas</option>
+                {% if comunas %}
+                    {% for comuna in comunas %}
+                        <option value="{{ comuna.id }}"
+                            {% if request.GET.comuna == comuna.id|stringformat:"s" %}selected{% endif %}>
+                            {{ comuna.nombre }}
+                        </option>
+                    {% endfor %}
+                {% endif %}
             </select>
         </div>
 
@@ -24,9 +38,23 @@
             <select name="tipo" class="form-select">
                 <option value="">Todos</option>
                 {% for value, label in tipos_inmueble %}
-                    <option value="{{ value }}">{{ label }}</option>
+                    <option value="{{ value }}"
+                        {% if request.GET.tipo == value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
                 {% endfor %}
             </select>
+        </div>
+
+        <!-- Rango de precio -->
+        <div class="mb-3">
+            <label class="form-label">Precio (arriendo mensual)</label>
+            <div class="d-flex">
+                <input type="number" name="precio_min" class="form-control me-2"
+                       placeholder="Mín." value="{{ request.GET.precio_min }}">
+                <input type="number" name="precio_max" class="form-control"
+                       placeholder="Máx." value="{{ request.GET.precio_max }}">
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>

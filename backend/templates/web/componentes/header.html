@@ -9,45 +9,45 @@
 </head>
 <body>
     <!-- Popular Properties -->
-    <section class="container my-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="fw-bold text-primary">Popular Properties</h2>
-            <a href="{% url 'inmueble_list' %}" class="btn rounded-pill" style="background-color:#0066df; color:white;">
-                View all properties
-            </a>
+    <div class="header-carousel carousel slide" id="propertyCarousel" data-bs-ride="carousel">
+
+        <!-- Overlay fijo -->
+        <div class="header-overlay">
+            <h2>Popular Properties</h2>
+            <a href="{% url 'inmueble_list' %}">View all properties</a>
         </div>
 
-        <div id="propertyCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                {% for inmueble in inmuebles %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <img src="{{ inmueble.imagen.url }}" class="d-block w-100" alt="{{ inmueble.nombre }}" style="object-fit: cover; height: 400px;">
-                        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-                            <h5 class="text-white">{{ inmueble.nombre }}</h5>
-                            <p class="text-white mb-1">{{ inmueble.comuna.nombre }}</p>
-                            <p class="text-warning fw-bold">${{ inmueble.arriendo_mensual|floatformat:0 }}</p>
-                            <small class="text-light">{{ inmueble.descripcion|truncatewords:12 }}</small>
-                        </div>
+        <div class="carousel-inner">
+            {% for inmueble in inmuebles %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ inmueble.imagen.url }}" alt="{{ inmueble.nombre }}">
+                    <div class="carousel-caption bg-dark bg-opacity-50 rounded p-3">
+                        <h5 class="text-white">{{ inmueble.nombre }}</h5>
+                        <p class="text-white mb-1">{{ inmueble.comuna.nombre }}</p>
+                        <p class="text-warning fw-bold">
+                            ${{ inmueble.arriendo_mensual|floatformat:0 }}
+                        </p>
+                        <small class="text-light d-block">
+                            {{ inmueble.descripcion|truncatewords:20 }}
+                        </small>
                     </div>
-                {% empty %}
-                    <div class="carousel-item active">
-                        <div class="text-center p-5 bg-light rounded">
-                            <h5>No hay propiedades para mostrar</h5>
-                        </div>
+                </div>
+            {% empty %}
+                <div class="carousel-item active">
+                    <div class="text-center p-5 bg-light rounded">
+                        <h5>No hay propiedades para mostrar</h5>
                     </div>
-                {% endfor %}
-            </div>
-
-            <!-- Controles -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Siguiente</span>
-            </button>
+                </div>
+            {% endfor %}
         </div>
-    </section>
+
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#propertyCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#propertyCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
 </body>
 </html>
