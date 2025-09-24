@@ -25,7 +25,7 @@
                         <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
                             <h5 class="text-white">{{ inmueble.nombre }}</h5>
                             <p class="text-white mb-1">{{ inmueble.comuna.nombre }}</p>
-                            <p class="text-warning fw-bold">${{ inmueble.arriendo_mensual }}</p>
+                            <p class="text-warning fw-bold">${{ inmueble.arriendo_mensual|floatformat:0 }}</p>
                             <small class="text-light">{{ inmueble.descripcion|truncatewords:12 }}</small>
                         </div>
                     </div>
