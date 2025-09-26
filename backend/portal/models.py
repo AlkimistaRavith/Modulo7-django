@@ -80,3 +80,8 @@ class PerfilUser(AbstractUser):
     def __str__(self):
         return f"{self.get_full_name()} | {self.tipo_usuario}"
 
+class ContactData(models.Model):
+    contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    customer_email = models.EmailField()
+    customer_name = models.CharField(max_length=64)
+    message = models.TextField()

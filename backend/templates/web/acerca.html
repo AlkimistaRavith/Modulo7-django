@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acerca de - Portal Inmobiliario</title>
+    {% include 'web/componentes/scripts.html' %}
+</head>
+<body>
+    {% include 'web/componentes/navbar.html' %}
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg p-5">
+                    <h2 class="mb-4 text-center text-primary">Acerca de Portal.Inmobiliario</h2>
+                    <p>
+                        Bienvenido a <strong>Portal.Inmobiliario</strong>, una plataforma diseñada para conectar
+                        arrendatarios con propietarios de forma fácil, rápida y segura.
+                    </p>
+                    <p>
+                        Aquí podrás encontrar una amplia variedad de propiedades en arriendo y publicar tu inmueble
+                        para llegar a más interesados. Nuestro objetivo es simplificar el proceso de búsqueda
+                        y publicación de arriendos.
+                    </p>
+                    <p>
+                        Si eres propietario, podrás gestionar tus inmuebles en línea y facilitar el contacto con 
+                        arrendatarios. Y si buscas arriendo, tendrás acceso a filtros y herramientas para encontrar 
+                        la propiedad que mejor se ajuste a tus necesidades.
+                    </p>
+                    <p>
+                        Nuestro equipo está formado por <strong>profesionales del rubro inmobiliario</strong>, 
+                        con experiencia en bienes raíces, gestión legal y asesoría especializada.  
+                        No dudes en <a href="{% url 'contacto' %}">contactarnos</a> si tienes cualquier consulta, 
+                        ya sea sobre propiedades, aspectos legales o dudas generales. Estamos aquí para ayudarte.
+                    </p>
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'contacto' %}" class="btn btn-outline-primary">Contáctanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

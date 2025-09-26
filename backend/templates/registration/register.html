@@ -1,18 +1,35 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Registro - Portal Inmobiliario</title>
+    {% include 'web/componentes/scripts.html' %}
 </head>
 <body>
-    <h1>Registro</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Crear cuenta</button>
-    </form>
+    {% include 'web/componentes/navbar.html' %}
 
-    <p><a href="{% url 'login' %}">Ya tengo cuenta</a></p>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4">
+                    <h2 class="mb-4 text-center">Crea tu cuenta en Portal.Inmobiliario</h2>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-success w-100">Crear cuenta</button>
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <span>¿Ya tienes cuenta?  
+                            <a href="{% url 'login' %}">Inicia sesión aquí</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

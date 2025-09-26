@@ -13,7 +13,8 @@ from .models import (
     Comuna,
     Inmueble,
     SolicitudArriendo,
-    PerfilUser
+    PerfilUser,
+    ContactData
 )
 from django.views.generic import (
     ListView,
@@ -27,7 +28,8 @@ from .form import (
     ComunaForm,
     InmuebleForm,
     SolicitudArriendoForm,
-    PerfilUserForm
+    PerfilUserForm,
+    ContactDataForm
 )
 
 
@@ -236,3 +238,22 @@ def home(request):
     inmuebles = Inmueble.objects.all()[:5]
     return render(request, "web/home.html", {"inmuebles": inmuebles})
 
+
+def acerca_view(request):
+    return render(request, "web/acerca.html")
+
+def contacto_view(request):
+    if request.method == "POST":
+        form = ContactDataForm(request.POST)
+        if form.is_valid():
+            ContactData.objects.create(
+                customer_email=form.cleaned_data['customer_email'],
+                customer_name=form.cleaned_data['customer_name'],
+                message=form.cleaned_data['message']
+            )
+            messages.success(request, "Tu mensaje ha sido enviado con éxito. ¡Gracias por contactarnos!")
+            return redirect('contacto')
+    else:
+        form = ContactDataForm()
+
+    return render(request, "web/contacto.html", {"form": form})

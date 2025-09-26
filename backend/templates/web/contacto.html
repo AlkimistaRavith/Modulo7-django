@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contáctanos - Portal Inmobiliario</title>
+    {% include 'web/componentes/scripts.html' %}
+</head>
+<body>
+
+    
+    {% include 'web/componentes/navbar.html' %}
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg p-5">
+                    <h2 class="mb-4 text-center text-primary">Contáctanos</h2>
+                    <p class="text-center mb-4">
+                        Si tienes dudas, comentarios o sugerencias, por favor completa el siguiente formulario.  
+                        Nuestro equipo se pondrá en contacto contigo lo antes posible.
+                    </p>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Correo</label>
+                            {{ form.customer_email }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            {{ form.customer_name }}
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mensaje</label>
+                            {{ form.message }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Enviar</button>
+                    </form>
+
+                    {% if messages %}
+                        <div class="mt-4">
+                            {% for message in messages %}
+                                <div class="alert alert-info">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -34,6 +34,8 @@ urlpatterns = [
     path("accounts/logout/", logout_view, name="logout"),
     path("accounts/register/", register_view, name="register"),
 
-
+### LAYOUTS ###############################################################################
     path("", home , name="home"),
+    path("acerca/", acerca_view, name="acerca"),
+    path("contacto/", contacto_view, name="contacto"),
 ]
