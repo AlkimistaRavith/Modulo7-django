@@ -1,0 +1,39 @@
+<footer class="bg-dark text-light mt-5">
+  <div class="container py-4">
+    <div class="row">
+      <!-- Logo / nombre -->
+      <div class="col-md-4 mb-3">
+        <h5 class="fw-bold">Portal.Inmobiliario</h5>
+        <p class="small">
+          Tu portal confiable para conectar arrendatarios y propietarios de forma rápida y segura.
+        </p>
+      </div>
+
+      <!-- Navegación -->
+      <div class="col-md-4 mb-3">
+        <h6 class="fw-bold">Enlaces útiles</h6>
+        <ul class="list-unstyled">
+          <li><a href="{% url 'home' %}" class="text-light text-decoration-none">Inicio</a></li>
+          <li><a href="{% url 'inmueble_list' %}" class="text-light text-decoration-none">Busco arriendo</a></li>
+          <li><a href="{% url 'acerca' %}" class="text-light text-decoration-none">Acerca de</a></li>
+          <li><a href="{% url 'contacto' %}" class="text-light text-decoration-none">Contáctanos</a></li>
+        </ul>
+      </div>
+
+      <!-- Redes sociales -->
+      <div class="col-md-4 mb-3 text-md-end">
+        <h6 class="fw-bold">Síguenos</h6>
+        <a href="#" class="text-light me-3"><i class="bi bi-facebook fs-4"></i></a>
+        <a href="#" class="text-light me-3"><i class="bi bi-instagram fs-4"></i></a>
+        <a href="#" class="text-light"><i class="bi bi-twitter-x fs-4"></i></a>
+      </div>
+    </div>
+
+    <hr class="border-secondary">
+
+    <!-- Copy -->
+    <div class="text-center small">
+      &copy; {{ now|date:"Y" }} Portal.Inmobiliario — Todos los derechos reservados.
+    </div>
+  </div>
+</footer>

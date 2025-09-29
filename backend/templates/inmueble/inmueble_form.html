@@ -1,11 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% include 'web/componentes/scripts.html' %}
 </head>
 <body>
+    {% include 'web/componentes/navbar.html' %}
     <h1>Formulario para Inmueble</h1>
 
     <form method="post" enctype="multipart/form-data">
@@ -15,5 +18,8 @@
 
     </form>
 
+    {% include 'web/componentes/footer.html' %}
+
+    {% include 'web/componentes/scripts_footer.html' %}
 </body>
 </html>
