@@ -5,8 +5,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from .form import RegisterForm, LoginForm
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, get_user_model
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import (
     Region,
@@ -191,11 +192,25 @@ class SolicitudArriendoDeleteView(DeleteView):
     success_url = reverse_lazy("solicitud_list")
 
 ###CRUD PARA SOLICITUDES DE ARRIENDO
-class PerfilUserUpdateView(UpdateView):
-    model = PerfilUser
-    form_class = PerfilUserForm
+
+User = get_user_model()
+
+class PerfilUserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
     template_name = "usuario/perfil_form.html"
-    success_url = reverse_lazy("solicitud_list")
+    fields = ["first_name", "last_name", "email", "tipo_usuario", "imagen"]
+
+    def get_object(self):
+        # Siempre devuelve el usuario logueado
+        return self.request.user
+
+    def form_valid(self, form):
+        # Guardamos la imagen si viene en el request
+        self.object = form.save(commit=False)
+        if "imagen" in self.request.FILES:
+            self.object.imagen = self.request.FILES["imagen"]
+        self.object.save()
+        return redirect("perfil_update", pk=self.object.pk)
 
 #######################################################################################
 # TEMPLATES: REGISTER

@@ -1,6 +1,7 @@
 
 from django.urls import path, include
 from .views import *
+from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
@@ -26,7 +27,8 @@ urlpatterns = [
     path("actualizar_solicitud/<int:pk>", SolicitudArriendoUpdateView.as_view() , name="solicitud_update"),
     path("borrar_solicitud/<int:pk>", SolicitudArriendoDeleteView.as_view() , name="solicitud_delete"),
 ### PERFIL USER ###############################################################################
-    path("actualizar_perfil/<int:pk>", PerfilUserUpdateView.as_view() , name="perfil_update"),
+    path("perfil/", PerfilUserUpdateView.as_view(), name="perfil_update"),
+    path("perfil/password/", auth_views.PasswordChangeView.as_view(template_name="usuario/password_change.html",success_url="/perfil/"), name="password_change"),
 
 ### LOGIN-LOGOUT ###############################################################################
     path("accounts/login/",  login_view,  name="login"),

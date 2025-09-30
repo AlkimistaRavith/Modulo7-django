@@ -12,7 +12,66 @@
 
     <!-- header -->
     {% include 'web/componentes/header.html' %}
-    <h1>HOME</h1>
+    
+    <!-- Hero Section -->
+    <section class="container my-5">
+        <div class="row align-items-center">
+            <!-- Texto principal -->
+            <div class="col-md-6 text-center text-md-start">
+                <h1 class="display-4 fw-bold">
+                    Bienvenido a <span class="text-primary">Portal.Inmobiliario</span>
+                </h1>
+                <p class="lead mt-3">
+                    El lugar donde arrendadores y arrendatarios se conectan fácil, rápido y seguro. 
+                    Gestiona tus inmuebles, encuentra el espacio ideal y administra tu perfil en segundos.
+                </p>
+                <div class="mt-4">
+                    <a href="{% url 'inmueble_list' %}" class="btn btn-primary btn-lg me-2">Explorar inmuebles</a>
+                    <a href="{% url 'perfil_update' %}" class="btn btn-outline-secondary btn-lg">Mi perfil</a>
+                </div>
+            </div>
+
+            <!-- Imagen ilustrativa -->
+            <div class="col-md-6 text-center mt-4 mt-md-0">
+                <img src="/media/inmuebles/1casapiloto.png" alt="Hero imagen" class="img-fluid" style="max-height: 350px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de características -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-house-door-fill text-primary fs-1"></i>
+                            <h5 class="mt-3">Encuentra tu espacio</h5>
+                            <p class="text-muted">Accede a una gran variedad de inmuebles publicados por arrendadores de confianza.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-person-check-fill text-success fs-1"></i>
+                            <h5 class="mt-3">Gestión de perfil</h5>
+                            <p class="text-muted">Actualiza tu información, cambia tu imagen de perfil y controla tu tipo de usuario fácilmente.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <i class="bi bi-lock-fill text-danger fs-1"></i>
+                            <h5 class="mt-3">Seguridad</h5>
+                            <p class="text-muted">Protege tu cuenta con contraseñas seguras y opciones de recuperación de acceso.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
 

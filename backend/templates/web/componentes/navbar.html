@@ -29,6 +29,7 @@
 
             <!-- Login / Logout -->
             {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'perfil_update' %}">Perfil</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Inicia sesión / Registrate</a></li>

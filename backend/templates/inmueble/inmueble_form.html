@@ -11,6 +11,9 @@
     {% include 'web/componentes/navbar.html' %}
     <h1>Formulario para Inmueble</h1>
 
+    
+    
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
