@@ -41,29 +41,28 @@ Plataforma desarrollada en **Django** para conectar **arrendadores** y **arrenda
 ---
 
 ## 📂 Estructura del proyecto
-  backend/
-  │── media/
-  │ ├── fotos_perfil/
-  │ └── inmuebles/
-  │ ├── 1casapiloto.png
-  │ ├── casa2.jpeg
-  │ └── sin_imagen.png
-  │
-  portal/
-  │── templates/
-  │ ├── web/componentes/
-  │ │ ├── navbar.html
-  │ │ ├── footer.html
-  │ │ ├── scripts.html
-  │ │ └── scripts_footer.html
-  │ │
-  │ ├── web/
-  │ │ ├── index.html
-  │ │ ├── acerca.html
-  │ │ └── contacto.html
-  │ │
-  │ └── usuarios/
-  │ └── perfil_form.html
+```bash
+backend/
+ ├── media/
+ │   ├── fotos_perfil/
+ │   └── inmuebles/
+ │       ├── 1casapiloto.png
+ │       ├── casa2.jpeg
+ │       └── sin_imagen.png
+ └── portal/
+     └── templates/
+         ├── web/componentes/
+         │   ├── navbar.html
+         │   ├── footer.html
+         │   ├── scripts.html
+         │   └── scripts_footer.html
+         ├── web/
+         │   ├── index.html
+         │   ├── acerca.html
+         │   └── contacto.html
+         └── usuarios/
+             └── perfil_form.html
+```
 
 🛠️ Tecnologías utilizadas
 
