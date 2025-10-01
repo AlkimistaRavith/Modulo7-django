@@ -65,16 +65,16 @@ backend/
 ```
 
 🛠️ Tecnologías utilizadas
-
-Django 4.x
-Python 3.9+
-Bootstrap 5 (estilos y componentes)
-SQLite3 (desarrollo, fácil despliegue)
+Django 4.2
+Python 3.12
+Docker 28.3 y Docker-compose v2.38
+HTML5 + Bootstrap 5 
+PostgreSQL
 
 ▶️ Cómo ejecutar el proyecto con Docker Compose
 
 ### Clonar repositorio
-git clone <repo_url>
+git clone <https://github.com/David-Medina-Jofre/Modulo7-django.git>
 cd portal_inmobiliario
 
 ### Construir y levantar contenedores
